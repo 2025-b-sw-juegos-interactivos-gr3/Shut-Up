@@ -73,11 +73,12 @@ El proyecto sigue una estructura orientada a dominios para mantener la separaci�
 1.  **Clonar el repositorio:**
     ```bash
     git clone https://github.com/2025-b-sw-juegos-interactivos-gr3/Shut-Up.git
-    cd shut-up-game
+    cd Shut-Up
     ```
 
 2.  **Instalar dependencias:**
     ```bash
+    cd shut-up-game
     npm install
     ```
 
@@ -85,7 +86,35 @@ El proyecto sigue una estructura orientada a dominios para mantener la separaci�
     ```bash
     npm run dev
     ```
-    El juego estará disponible en `http://localhost:8080`.
+    El prototipo estará disponible en `http://localhost:8080`.
+
+---
+
+## 🎯 Vertical Slice (Prototipo Jugable)
+
+Este repo incluye un **Vertical Slice** enfocado en mecánicas + estética:
+
+- Movimiento en primera persona con colisiones
+- Micrófono (calibración + detección de ruido) → Game Over inmediato
+- Temporizador condicional: solo avanza si el jugador se mueve
+- HUD diegético estilo VHS/Bodycam
+
+### Cómo jugar
+
+1. Abre `http://localhost:8080`
+2. Click en **Conectar Micrófono** y acepta permisos
+3. Click en **Calibrar (3s)** y mantén silencio
+4. Click en **Iniciar** y avanza hasta el final del pasillo
+
+Controles: `WASD` mover, Mouse mirar, Click para capturar puntero, `F` linterna, `R` rebobinar/reintentar, `P` pausa.
+
+Extra (screamers reales):
+- Imágenes: `shut-up-game/public/screamers/<id>.svg` (ej: `screamer_1.svg`)
+- Audio: `shut-up-game/public/sfx/<id>.ogg` (o `.mp3`/`.wav`)
+
+Si no existe el audio del screamer, el juego usa un stinger sintético como fallback.
+
+Entregable escrito: [VERTICAL_SLICE.md](VERTICAL_SLICE.md)
 
 ---
 

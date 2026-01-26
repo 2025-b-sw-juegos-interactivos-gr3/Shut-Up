@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shut Up! — Vertical Slice</title>
+    <style>
+      /* Critical boot screen: shows instantly while JS/CSS load */
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: #050508;
+        overflow: hidden;
+      }
+      #boot {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.9);
+        color: #ff2b2b;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+          monospace;
+        letter-spacing: 0.08em;
+        z-index: 10000;
+      }
+      #boot::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.06),
+            rgba(255, 255, 255, 0.06) 1px,
+            rgba(0, 0, 0, 0) 3px,
+            rgba(0, 0, 0, 0) 4px
+          );
+        opacity: 0.35;
+        mix-blend-mode: overlay;
+        animation: bootJitter 160ms steps(2) infinite;
+      }
+      #boot .bootText {
+        position: relative;
+        text-align: center;
+        text-shadow: 0 0 12px rgba(255, 0, 0, 0.35);
+      }
+      #boot .bootText .sub {
+        margin-top: 8px;
+        font-size: 12px;
+        opacity: 0.85;
+      }
+      @keyframes bootJitter {
+        0% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(-6px, 3px);
+        }
+        100% {
+          transform: translate(5px, -4px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="boot" aria-label="Loading">
+      <div class="bootText">
+        <div>PLAYBACK…</div>
+        <div class="sub">Cargando cinta / inicializando cámara</div>
+      </div>
+    </div>
+
+    <div id="app">
+      <canvas id="renderCanvas"></canvas>
+    </div>
+
+    <div id="hud">
+      <div class="scanlines"></div>
+      <div class="vhsNoise"></div>
+      <div id="hudTopLeft" class="hud-corner">BAT <span id="hudBattery">100%</span></div>
+      <div id="hudTopRight" class="hud-corner"><span id="hudRec">● REC</span> <span id="hudTimestamp">00:00:00:00</span></div>
+      <div id="micMeter"><div id="micMeterFill"></div></div>
+    </div>
+
+    <div id="screamer" aria-hidden="true">
+      <img id="screamerImg" alt="" />
+      <div class="screamer-noise"></div>
+      <div class="screamer-text">
+        <div>DON'T SCREAM</div>
+        <div class="sub">SIGNAL GLITCH</div>
+      </div>
+    </div>
+
+    <div id="overlay">
+      <div class="panel">
+        <h1>SHUT UP! — Vertical Slice</h1>
+        <p><span class="danger">Regla:</span> si el mic detecta un pico de ruido, pierdes instantáneamente.</p>
+        <p>1) Permite micrófono. 2) Calibra tu silencio. 3) Inicia y llega al final del pasillo.</p>
+
+        <div class="row" style="margin-top: 12px;">
+          <button id="btnMic">Conectar Micrófono</button>
+          <button id="btnCalibrate" disabled>Calibrar (3s)</button>
+          <button id="btnStart" disabled>Iniciar</button>
+        </div>
+
+        <p style="margin-top: 12px;">Nivel mic: <span id="micValue">0.00</span> | Umbral: <span id="micThreshold">(sin calibrar)</span></p>
+        <div class="row">
+          <div class="bar"><div id="micBar"></div></div>
+          <small id="micHint">Tip: no hables durante la calibración.</small>
+        </div>
+
+        <p style="margin-top: 12px;"><small>Controles: WASD mover, Mouse mirar, Click para capturar puntero. F linterna. R rebobinar. P pausa.</small></p>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
